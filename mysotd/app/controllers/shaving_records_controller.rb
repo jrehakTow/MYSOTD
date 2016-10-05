@@ -20,8 +20,15 @@ class ShavingRecordsController < ApplicationController
     @item = Item.where(user_id: current_user.id)
     @shaving_record.items = @item
 
+    puts params[:item_ids]
+    puts 'new!'
+
     #@shaving_record.shaving_items << ShavingItem.new {:item_ids}
     #@shaving_item = @shaving_record.shaving_items.build(shaving_record_params)
+
+    #this
+    #shaving_item = Shaving_item.new
+    #shaving_item.shaving_record_id = @shaving_record.id
   end
 
   # GET /shaving_records/1/edit
@@ -32,9 +39,28 @@ class ShavingRecordsController < ApplicationController
   # POST /shaving_records.json
   def create
     @shaving_record = ShavingRecord.new(shaving_record_params)
-    @shaving_item = @shaving_record.shaving_items.build(params[:item_ids]) #this
+    #@shaving_item = @shaving_record.shaving_items.build(params[:item_ids]) #this
+
+    shaving_item = ShavingItem.new
+    @shaving_items = params['shave_record'][:item_ids]
+
+    puts @shaving_items
+    puts 'create started!!'
+
+
+
+
     respond_to do |format|
       if @shaving_record.save
+
+        #create loop to add multiple items to shaving items
+        @shaving_items.each do |item|
+          puts 'shaving record', @shaving_record.id
+          puts 'item', item
+          shaving_item.shaving_record_id = @shaving_record.id
+          shaving_item.item_id = item
+          shaving_item.save
+        end
 
         format.html { redirect_to @shaving_record, notice: 'Shaving record was successfully created.' }
         format.json { render :show, status: :created, location: @shaving_record }
