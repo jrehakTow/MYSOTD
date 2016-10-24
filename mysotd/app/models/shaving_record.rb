@@ -4,6 +4,7 @@ class ShavingRecord < ActiveRecord::Base
   has_many :items, :through => :shaving_items
 
   accepts_nested_attributes_for :items
+  accepts_nested_attributes_for :shaving_items
 
   has_attached_file :picture, styles:{medium: "300x300>", thumb: "100x100>"}, default_url: "/images/:style/missing.png"
   validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/

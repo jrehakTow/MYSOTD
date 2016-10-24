@@ -7,6 +7,11 @@ class ShavingRecordsController < ApplicationController
   def index
     #@shaving_records = ShavingRecord.all
     @shaving_records = ShavingRecord.where(user_id: current_user.id)
+
+    #shaving_items = ShavingItem.where(shaving_record_id: @shaving_records)
+    #puts shaving_items
+    #@items = Item.all
+    #@items = Item.where(id: shaving_items.item_id)
   end
 
   # GET /shaving_records/1
@@ -39,15 +44,9 @@ class ShavingRecordsController < ApplicationController
   # POST /shaving_records.json
   def create
     @shaving_record = ShavingRecord.new(shaving_record_params)
-    #@shaving_item = @shaving_record.shaving_items.build(params[:item_ids]) #this
 
-    shaving_item = ShavingItem.new
+
     @shaving_items = params['shave_record'][:item_ids]
-
-    puts @shaving_items
-    puts 'create started!!'
-
-
 
 
     respond_to do |format|
@@ -55,8 +54,9 @@ class ShavingRecordsController < ApplicationController
 
         #create loop to add multiple items to shaving items
         @shaving_items.each do |item|
-          puts 'shaving record', @shaving_record.id
-          puts 'item', item
+          shaving_item = ShavingItem.new
+          #puts 'shaving record', @shaving_record.id
+          #puts 'item', item
           shaving_item.shaving_record_id = @shaving_record.id
           shaving_item.item_id = item
           shaving_item.save

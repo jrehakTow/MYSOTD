@@ -26,9 +26,12 @@
         <td><%= shaving_record.user_id %></td>
         <td><%=l shaving_record.created_at %></td>
         <td><%= shaving_record.picture %></td>
-        <td><%= shaving_record.items do |i| %></td>
-            <td><%= i.name%></td>
+        <td><% shaving_record.items.each do |item| %>
+              <ul>
+                <li><%= item.name%></li>
+              </ul>
           <%end%>
+        </td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_shaving_record_path(shaving_record), :class => 'btn btn-default btn-xs' %>
