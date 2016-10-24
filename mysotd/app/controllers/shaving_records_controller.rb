@@ -57,9 +57,11 @@ class ShavingRecordsController < ApplicationController
           shaving_item = ShavingItem.new
           #puts 'shaving record', @shaving_record.id
           #puts 'item', item
+          @item = Item.find(item)
           shaving_item.shaving_record_id = @shaving_record.id
           shaving_item.item_id = item
           shaving_item.save
+          @item.increment!(:uses)
         end
 
         format.html { redirect_to @shaving_record, notice: 'Shaving record was successfully created.' }
