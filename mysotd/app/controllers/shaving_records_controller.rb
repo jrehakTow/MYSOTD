@@ -22,11 +22,11 @@ class ShavingRecordsController < ApplicationController
   # GET /shaving_records/new
   def new
     @shaving_record = ShavingRecord.new
-    @item = Item.where(user_id: current_user.id)
+    @item = Item.where(user_id: current_user.id, retired: false)
     @shaving_record.items = @item
 
-    puts params[:item_ids]
-    puts 'new!'
+    #puts params[:item_ids]
+    #puts 'new!'
 
     #@shaving_record.shaving_items << ShavingItem.new {:item_ids}
     #@shaving_item = @shaving_record.shaving_items.build(shaving_record_params)

@@ -55,7 +55,7 @@
       <%= f.label :items, :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
 
-        <%Item.all.each do |item| %>
+        <%@item.all.each do |item| %>
         <div>
           <%= check_box_tag :items_ids, item.id, @shaving_record.items.include?(item), :name => 'shave_record[item_ids][]' %>
           <%= label_tag :item_ids, item.name %>
