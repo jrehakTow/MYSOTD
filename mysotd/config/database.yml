@@ -14,7 +14,7 @@ development:
  encoding: unicode
  database: shaveden
  pool: 5
- username: shaver
+ username: rehakjc
  password:
 
 # Warning: The database defined as "test" will be erased and
@@ -25,7 +25,7 @@ test:
  encoding: unicode
  database: shaveden
  pool: 5
- username: shaver
+ username: rehakjc
  password:
 
 production:
@@ -33,5 +33,5 @@ production:
  encoding: unicode
  database: shaveden
  pool: 5
- username: shaver
+ username: rehakjc
  password:

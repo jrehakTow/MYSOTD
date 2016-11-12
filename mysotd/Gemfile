@@ -7,6 +7,7 @@ gem 'rails', '4.2.6'
 #gem 'sqlite3'
 # Use postgres as the database for Active Record
 gem 'pg'
+# for image upload
 gem 'paperclip'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -32,6 +33,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use devise for user model
 gem 'devise'
 
+# Use omniauthorization
+gem 'omniauth'
+gem 'omniauth-twitter'
 # Use twitter Bootstrap
 gem 'twitter-bootstrap-rails'
 
