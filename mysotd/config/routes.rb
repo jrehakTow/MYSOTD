@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  post 'tweets/new'
+
+  post 'tweets/create'
+
   resources :shaving_records
   resources :items
   resources :categories

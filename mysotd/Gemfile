@@ -39,6 +39,8 @@ gem 'omniauth-twitter'
 # Use twitter Bootstrap
 gem 'twitter-bootstrap-rails'
 
+# Use twitter gem for sharing
+gem 'twitter'
 # Use Unicorn as the app server
 # gem 'unicorn'
 

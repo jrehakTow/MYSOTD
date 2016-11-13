@@ -59,4 +59,5 @@ Rails.application.configure do
       authentication: :plain,
       domain: 'somedomain.com'
   }
+
 end

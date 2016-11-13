@@ -48,10 +48,38 @@ class User < ActiveRecord::Base
       identity.user = user
       identity.save!
     end
+    @token = auth.credentials.token #this works, just need it to be used in tweet controller
+    @secret =  auth.credentials.secret
+    @twitter_client = self.make_twitter_client(@token, @secret)
     user
+    #@twitter_auth_has = self.build_twitter_auth_cookie_hash(auth)
+    #puts auth.credentials.token
+
   end
 
   def email_verified?
     self.email && self.email !~ TEMP_EMAIL_REGEX
   end
+
+  # build auth cookie hash for twitter
+  def self.build_twitter_auth_cookie_hash data
+    {
+        :provider => data.provider, :uid => data.uid.to_i,
+        :access_token => data.credentials.token.to_s, :access_secret => data.credentials.secret.to_s,
+        :first_name => data.screen_name, :user_name => data.name,
+
+    }
+    puts "twitter hash built"
+  end
+
+  def self.make_twitter_client(token, secret)
+    $client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = Rails.application.secrets.twitter_api_key
+      config.consumer_secret     = Rails.application.secrets.twitter_api_secret
+      config.access_token        = token
+      config.access_token_secret = secret
+    end
+    puts "twitter client made"
+  end
+
 end
