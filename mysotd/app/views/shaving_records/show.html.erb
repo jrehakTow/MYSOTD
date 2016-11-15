@@ -4,6 +4,8 @@
 </div>
 
 <dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:picture) %>:</strong></dt>
+  <dd><%= image_tag @shaving_record.picture(:medium) %></dd>
   <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
   <dd><%= @shaving_record.description %></dd>
   <dt><strong><%= model_class.human_attribute_name(:date) %>:</strong></dt>
@@ -12,6 +14,12 @@
   <dd><%= @shaving_record.rating %></dd>
   <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
   <dd><%= @shaving_record.user_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:items) %>:</strong></dt>
+  <dd> <% @items.all.each do |item| %>
+        <div>
+          <%= item.name %>
+        </div>
+    <%end%></dd>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),

@@ -4,3 +4,5 @@
   #config.access_token        = Rails.application.secrets.twitter_access_token   #temporary, this is unique to user
   #config.access_token_secret = Rails.application.secrets.twitter_access_token_secret
 #end
+
+#supurfulous remove?

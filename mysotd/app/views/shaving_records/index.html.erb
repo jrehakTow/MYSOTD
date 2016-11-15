@@ -25,7 +25,7 @@
         <td><%= shaving_record.rating %></td>
         <td><%= shaving_record.user_id %></td>
         <td><%=l shaving_record.created_at %></td>
-        <td><%= shaving_record.picture %></td>
+        <td><%= image_tag shaving_record.picture(:thumb) %></td>
         <td><% shaving_record.items.each do |item| %>
               <ul>
                 <li><%= item.name%></li>

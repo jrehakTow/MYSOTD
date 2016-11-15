@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!
 
+  #should do number of uses before retired
   # GET /items
   # GET /items.json
   def index

@@ -17,6 +17,11 @@ class ShavingRecordsController < ApplicationController
   # GET /shaving_records/1
   # GET /shaving_records/1.json
   def show
+    @shaving_items = ShavingItem.where(shaving_record_id: params[:id]).pluck(:item_id)
+    #shaving_items = ShavingItem.find_by_shaving_record_id(params[:id])
+
+    puts @shaving_items
+    @items = Item.where(id: @shaving_items)
   end
 
   # GET /shaving_records/new
@@ -38,6 +43,10 @@ class ShavingRecordsController < ApplicationController
 
   # GET /shaving_records/1/edit
   def edit
+    @shaving_items = ShavingItem.find_by_shaving_record_id(params[:id])
+    puts @shaving_items
+
+    @item = Item.where(user_id: current_user.id, retired: false)
   end
 
   # POST /shaving_records
@@ -76,8 +85,40 @@ class ShavingRecordsController < ApplicationController
   # PATCH/PUT /shaving_records/1
   # PATCH/PUT /shaving_records/1.json
   def update
+
+    @shaving_items = params['shave_record'][:item_ids]
+    #puts "update" + @shaving_items.to_s
+    #@shaving_items_in_record = Hash[ShavingItem.where(shaving_record_id: params[:id]).pluck(:item_id).flatten(1)]
+    @shaving_items_in_record = ShavingItem.where(shaving_record_id: params[:id]).pluck(:item_id)
+    @shaving_items_in_record = @shaving_items_in_record.map(&:to_s)
+    #puts "Old one" + @shaving_items_in_record.to_s
+
+    #@array_math = @shaving_items.zip(@shaving_items_in_record)
+    @items_to_add = @shaving_items - @shaving_items_in_record
+    #puts "New items" + @array_math.to_s
+    @items_to_remove = @shaving_items_in_record - @shaving_items
+    #puts "items to remove" +@items_to_remove.to_s
+
+
     respond_to do |format|
       if @shaving_record.update(shaving_record_params)
+
+       @items_to_add.each do |new_item|
+         shaving_item = ShavingItem.new
+         item = Item.find(new_item)
+         shaving_item.shaving_record_id = @shaving_record.id
+         shaving_item.item_id = new_item
+         shaving_item.save
+         item.increment!(:uses)
+       end
+
+       @items_to_remove.each do |old_item|
+         shaving_item_removed = ShavingItem.find_by_shaving_record_id_and_item_id(params[:id], old_item)
+         shaving_item_removed.destroy
+         item = Item.find(old_item)
+         item.decrement!(:uses)
+       end
+
         format.html { redirect_to @shaving_record, notice: 'Shaving record was successfully updated.' }
         format.json { render :show, status: :ok, location: @shaving_record }
       else
@@ -92,6 +133,9 @@ class ShavingRecordsController < ApplicationController
   def destroy
     @shaving_record.destroy
     respond_to do |format|
+
+      shaving_item_removed = ShavingItem.find_by_shaving_record_id(params[:id])
+      shaving_item_removed.destroy
       format.html { redirect_to shaving_records_url, notice: 'Shaving record was successfully destroyed.' }
       format.json { head :no_content }
     end
