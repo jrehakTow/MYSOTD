@@ -67,11 +67,11 @@
         <div class="col-lg-9">
           <%= bootstrap_flash %>
           <%= yield %>
-
-
-
         </div>
+
+
         <div class="col-lg-3">
+          <% if false %>
           <div class="well sidebar-nav">
             <h3>Quick Links</h3>
             <ul class="nav nav-list">
@@ -81,6 +81,7 @@
               <li><%= link_to "Categories", categories_path  %></li>
             </ul>
           </div><!--/.well -->
+          <%end%>
         </div><!--/span-->
       </div><!--/row-->
 

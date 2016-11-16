@@ -1,13 +1,15 @@
+require 'open-uri'
 class ShavingRecordsController < ApplicationController
   before_action :set_shaving_record, only: [:show, :edit, :update, :destroy, :get_items]
   before_filter :authenticate_user!
+  helper_method :sort_column, :sort_direction
 
   # GET /shaving_records
   # GET /shaving_records.json
   def index
     #@shaving_records = ShavingRecord.all
-    @shaving_records = ShavingRecord.where(user_id: current_user.id)
 
+    @shaving_records = ShavingRecord.where(user_id: current_user.id).order(sort_column + ' ' + sort_direction)
     #shaving_items = ShavingItem.where(shaving_record_id: @shaving_records)
     #puts shaving_items
     #@items = Item.all
@@ -147,6 +149,13 @@ class ShavingRecordsController < ApplicationController
   end
 
   private
+    def sort_column
+      params[:sort] || "created_at"
+    end
+
+    def sort_direction
+      params[:direction] || "asc"
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_shaving_record
       @shaving_record = ShavingRecord.find(params[:id])

@@ -6,12 +6,13 @@
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:description) %></th>
-      <th><%= model_class.human_attribute_name(:date) %></th>
-      <th><%= model_class.human_attribute_name(:rating) %></th>
-      <th><%= model_class.human_attribute_name(:user_id) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%= model_class.human_attribute_name(:picture) %></th>
+      <th><%= model_class.human_attribute_name(:description) %></th>
+      <th><%= sortable "date" %></th>
+      <th><i class="icon-arrow-up"><%= sortable "rating"%></i></th>
+      <th><%= model_class.human_attribute_name(:user_id) %></th>
+      <th><%= sortable "created_at" %></th>
+
       <th><%= model_class.human_attribute_name(:items) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -20,12 +21,12 @@
     <% @shaving_records.each do |shaving_record| %>
       <tr>
         <td><%= link_to shaving_record.id, shaving_record_path(shaving_record) %></td>
+        <td><%= link_to image_tag(shaving_record.picture(:thumb))%></td>
         <td><%= shaving_record.description %></td>
         <td><%= shaving_record.date %></td>
         <td><%= shaving_record.rating %></td>
         <td><%= shaving_record.user_id %></td>
         <td><%=l shaving_record.created_at %></td>
-        <td><%= image_tag shaving_record.picture(:thumb) %></td>
         <td><% shaving_record.items.each do |item| %>
               <ul>
                 <li><%= item.name%></li>

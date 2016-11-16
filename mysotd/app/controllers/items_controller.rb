@@ -1,13 +1,15 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!
+  helper_method :sort_column, :sort_direction
 
   #should do number of uses before retired
   # GET /items
   # GET /items.json
   def index
     #@items = Item.all
-    @items = Item.where(user_id: current_user.id)
+    @items = Item.where(user_id: current_user.id).order(sort_column + ' ' + sort_direction)
+    #@shaving_records = ShavingRecord.where(user_id: current_user.id).order(params[:sort] + ' ' + params[:direction])
   end
 
   # GET /items/1
@@ -66,6 +68,13 @@ class ItemsController < ApplicationController
   end
 
   private
+  def sort_column
+    params[:sort] || "created_at"
+  end
+
+  def sort_direction
+    params[:direction] || "asc"
+  end
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])

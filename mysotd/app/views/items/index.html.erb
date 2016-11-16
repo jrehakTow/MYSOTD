@@ -8,9 +8,9 @@
       <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:description) %></th>
-      <th><%= model_class.human_attribute_name(:uses) %></th>
+      <th><%= sortable "uses" %></th>
       <th><%= model_class.human_attribute_name(:price) %></th>
-      <th><%= model_class.human_attribute_name(:purcahse_date) %></th>
+      <th><%= sortable "purchase_date"%></th>
       <th><%= model_class.human_attribute_name(:retired) %></th>
       <th><%= model_class.human_attribute_name(:category_id) %></th>
       <th><%= model_class.human_attribute_name(:user_id) %></th>
