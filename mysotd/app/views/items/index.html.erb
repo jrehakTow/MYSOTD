@@ -1,8 +1,16 @@
 <%- model_class = Item -%>
 <div class="page-header">
   <h3><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h3>
+  <div class="btn btn-default"><%= sortable "uses" %></div>
+  <div class="btn btn-default"><%= sortable "purchase_date"%></div>
+  <div class="pull-right">
+    <%= link_to t('.new', :default => t("helpers.links.new")),
+              new_item_path,
+              :class => 'btn btn-primary' %>
+    </div>
 </div>
-<p>add sortable up here, it works on panels!</p>
+
+<%if false%>
 <table class="table table-responsive">
   <thead>
     <tr>
@@ -25,7 +33,7 @@
         <td><%= item.price %></td>
         <td><%= item.purchase_date %></td>
         <td><%= item.retired %></td>
-        <td><%= item.equipment_picture%></td>
+        <td><%= image_tag item.equipment_picture(:thumb)%></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_item_path(item), :class => 'btn btn-default btn-xs' %>
@@ -39,11 +47,48 @@
     <% end %>
   </tbody>
 </table>
+<%end%>
+
 <% @items.each do |item| %>
 <div class="panel panel-default">
-  <div class="panel-heading"><h5><%= link_to item.name, item_path(item)%> </h5></div>
+  <div class="panel-heading"><h5><%= link_to item.name, item_path(item)%>
+    <div class="panel-title pull-right"><%=item.purchase_date.strftime("%b %d, %Y")%>
+    </div></h5>
+  </div>
   <div class="panel-body">
-    <p><%=item.description%></p>
+    <table class = "table table-responsive">
+      <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:equipment_picture) %></th>
+        <th><%= model_class.human_attribute_name(:description) %></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><%= image_tag item.equipment_picture(:thumb)%></td>
+        <td><%=item.description%></td>
+      </tr>
+      </tbody>
+    </table>
+
+    <table class = "table table-responsive">
+      <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:price) %></th>
+        <th><%= model_class.human_attribute_name(:uses) %></th>
+        <th><%= model_class.human_attribute_name(:retired) %></th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><%= item.price %></td>
+        <td><%= item.uses %></td>
+        <td><%= item.retired %></td>
+
+      </tr>
+      </tbody>
+    </table>
     <p><%= link_to t('.edit', :default => t("helpers.links.edit")),
                    edit_item_path(item), :class => 'btn btn-default btn-s' %>
       <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
@@ -56,6 +101,4 @@
 </div>
 <%end%>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_item_path,
-            :class => 'btn btn-primary' %>
+

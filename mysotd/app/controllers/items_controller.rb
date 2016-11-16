@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_column, :sort_direction, :hide_items
 
   #should do number of uses before retired
   # GET /items
@@ -75,6 +75,7 @@ class ItemsController < ApplicationController
   def sort_direction
     params[:direction] || "asc"
   end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])

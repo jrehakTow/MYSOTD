@@ -3,27 +3,34 @@ class ShavingRecordsController < ApplicationController
   before_action :set_shaving_record, only: [:show, :edit, :update, :destroy, :get_items]
   before_filter :authenticate_user!
   helper_method :sort_column, :sort_direction
+  require 'json'
 
   # GET /shaving_records
   # GET /shaving_records.json
   def index
-    #@shaving_records = ShavingRecord.all
-
     @shaving_records = ShavingRecord.where(user_id: current_user.id).order(sort_column + ' ' + sort_direction)
-    #shaving_items = ShavingItem.where(shaving_record_id: @shaving_records)
-    #puts shaving_items
-    #@items = Item.all
-    #@items = Item.where(id: shaving_items.item_id)
+    respond_to :html, :json
   end
 
   # GET /shaving_records/1
   # GET /shaving_records/1.json
   def show
+    @shaving_record = ShavingRecord.find(params[:id])
     @shaving_items = ShavingItem.where(shaving_record_id: params[:id]).pluck(:item_id)
-    #shaving_items = ShavingItem.find_by_shaving_record_id(params[:id])
-
-    puts @shaving_items
     @items = Item.where(id: @shaving_items)
+
+    @shaving_record.to_json
+    respond_to do |format|
+      format.html
+      #format.json {render :json => @shaving_record.to_json + @items.to_json}
+
+      format.json {render :json =>{:shaving_record => @shaving_record,
+        :items => @items
+        }
+      }
+      puts @shaving_record.to_json(:only =>[:id, :description, :rating])
+      puts format.json
+    end
   end
 
   # GET /shaving_records/new
@@ -31,16 +38,6 @@ class ShavingRecordsController < ApplicationController
     @shaving_record = ShavingRecord.new
     @item = Item.where(user_id: current_user.id, retired: false)
     @shaving_record.items = @item
-
-    #puts params[:item_ids]
-    #puts 'new!'
-
-    #@shaving_record.shaving_items << ShavingItem.new {:item_ids}
-    #@shaving_item = @shaving_record.shaving_items.build(shaving_record_params)
-
-    #this
-    #shaving_item = Shaving_item.new
-    #shaving_item.shaving_record_id = @shaving_record.id
   end
 
   # GET /shaving_records/1/edit
