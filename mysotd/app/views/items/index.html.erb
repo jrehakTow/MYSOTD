@@ -1,20 +1,17 @@
 <%- model_class = Item -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h3><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h3>
 </div>
-<table class="table table-striped">
+<p>add sortable up here, it works on panels!</p>
+<table class="table table-responsive">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:description) %></th>
       <th><%= sortable "uses" %></th>
       <th><%= model_class.human_attribute_name(:price) %></th>
       <th><%= sortable "purchase_date"%></th>
       <th><%= model_class.human_attribute_name(:retired) %></th>
-      <th><%= model_class.human_attribute_name(:category_id) %></th>
-      <th><%= model_class.human_attribute_name(:user_id) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%= model_class.human_attribute_name(:equipment_picture) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -22,16 +19,12 @@
   <tbody>
     <% @items.each do |item| %>
       <tr>
-        <td><%= link_to item.id, item_path(item) %></td>
-        <td><%= item.name %></td>
+        <td><%= link_to item.name, item_path(item)%></td>
         <td><%= item.description %></td>
         <td><%= item.uses %></td>
         <td><%= item.price %></td>
         <td><%= item.purchase_date %></td>
         <td><%= item.retired %></td>
-        <td><%= item.category_id %></td>
-        <td><%= item.user_id %></td>
-        <td><%=l item.created_at %></td>
         <td><%= item.equipment_picture%></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
@@ -46,6 +39,22 @@
     <% end %>
   </tbody>
 </table>
+<% @items.each do |item| %>
+<div class="panel panel-default">
+  <div class="panel-heading"><h5><%= link_to item.name, item_path(item)%> </h5></div>
+  <div class="panel-body">
+    <p><%=item.description%></p>
+    <p><%= link_to t('.edit', :default => t("helpers.links.edit")),
+                   edit_item_path(item), :class => 'btn btn-default btn-s' %>
+      <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                  item_path(item),
+                  :method => :delete,
+                  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                  :class => 'btn btn-s btn-danger' %>
+    </p>
+  </div>
+</div>
+<%end%>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_item_path,

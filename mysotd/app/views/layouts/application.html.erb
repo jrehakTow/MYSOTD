@@ -38,7 +38,7 @@
   </head>
   <body>
 
-    <div class="navbar navbar-default navbar-static-top">
+    <div class="navbar navbar-inverse navbar-static-top">
       <div class="container">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
           <span class="icon-bar"></span>
@@ -48,11 +48,14 @@
         <a class="navbar-brand" href= / >Mysotd</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav"; width="100%"; style="...">
-            <li><%= link_to "My Shaves", shaving_records_path %></li>
-            <li><%= link_to "My Items", items_path  %></li>
-            <li><%= link_to "Categories", categories_path  %></li>
+            <li><%= link_to "My Shaves", shaving_records_path, :style => 'margin: 13px; padding:7px' %></li>
+            <li><%= link_to "My Items", items_path, :style => 'margin: 13px; padding:7px' %></li>
+            <li><%= link_to "Categories", categories_path, :style => 'margin: 13px; padding:7px'  %></li>
+
+            </ul>
+          <ul class="nav navbar-nav navbar-right">
             <% if user_signed_in? %>
-                <li><%= link_to 'Logout', destroy_user_session_path, :method => :delete, :style => 'margin: 13px; padding:7px', :class => 'btn btn-s btn-info' %></li>
+                <li><%= link_to 'Logout', destroy_user_session_path, :method => :delete, :style => 'margin: 13px; padding:7px', :class => 'btn btn-s btn-warning pull-right' %></li>
             <% else %>
                 <li><%= link_to "You are not signed in.", '#' %></li>
                 <li><%= link_to "Login", new_user_session_path, :class => 'btn btn-s btn-danger', :style => 'margin: 13px; padding:7px', :id => 'loginbutton', :onclick => 'hidelink()'%> </li>

@@ -1,4 +1,4 @@
-require 'open-uri'
+
 class ShavingRecordsController < ApplicationController
   before_action :set_shaving_record, only: [:show, :edit, :update, :destroy, :get_items]
   before_filter :authenticate_user!
