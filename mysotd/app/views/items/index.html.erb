@@ -1,14 +1,18 @@
 <%- model_class = Item -%>
 <div class="page-header">
   <h3><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h3>
-  <div class="btn btn-default"><%= sortable "uses" %></div>
-  <div class="btn btn-default"><%= sortable "purchase_date"%></div>
+  <div class="btn btn-default btn-sm"><%= sortable "uses" %></div>
+  <div class="btn btn-default btn-sm"><%= sortable "purchase_date"%></div>
+  <div class="btn btn-default btn-sm"><%= sortable "price"%></div>
+  <div class=" btn btn-default btn-sm"><%= hideable "retired"%></div>
+
   <div class="pull-right">
     <%= link_to t('.new', :default => t("helpers.links.new")),
               new_item_path,
               :class => 'btn btn-primary' %>
     </div>
 </div>
+
 
 <%if false%>
 <table class="table table-responsive">
@@ -49,8 +53,8 @@
 </table>
 <%end%>
 
-<% @items.each do |item| %>
-<div class="panel panel-default">
+<div id ="records"><% @items.each do |item| %>
+    <div class="panel panel-default">
   <div class="panel-heading"><h5><%= link_to item.name, item_path(item)%>
     <div class="panel-title pull-right"><%=item.purchase_date.strftime("%b %d, %Y")%>
     </div></h5>
@@ -82,9 +86,9 @@
       </thead>
       <tbody>
       <tr>
-        <td><%= item.price %></td>
+        <td><%= number_to_currency(item.price) %></td>
         <td><%= item.uses %></td>
-        <td><%= item.retired %></td>
+        <td><div id = "retired"><%= item.retired %></div></td>
 
       </tr>
       </tbody>
@@ -99,6 +103,8 @@
     </p>
   </div>
 </div>
+
 <%end%>
+</div>
 
 

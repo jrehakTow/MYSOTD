@@ -38,6 +38,9 @@ class ShavingRecordsController < ApplicationController
     @shaving_record = ShavingRecord.new
     @item = Item.where(user_id: current_user.id, retired: false)
     @shaving_record.items = @item
+    if @item.blank?
+      redirect_to items_url, alert: 'Please add a shaving item to inventory.'
+    end
   end
 
   # GET /shaving_records/1/edit
@@ -52,14 +55,9 @@ class ShavingRecordsController < ApplicationController
   # POST /shaving_records.json
   def create
     @shaving_record = ShavingRecord.new(shaving_record_params)
-
-
     @shaving_items = params['shave_record'][:item_ids]
-
-
     respond_to do |format|
       if @shaving_record.save
-
         #create loop to add multiple items to shaving items
         @shaving_items.each do |item|
           shaving_item = ShavingItem.new

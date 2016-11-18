@@ -7,9 +7,13 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    #@items = Item.all
-    @items = Item.where(user_id: current_user.id).order(sort_column + ' ' + sort_direction)
-    #@shaving_records = ShavingRecord.where(user_id: current_user.id).order(params[:sort] + ' ' + params[:direction])
+    #puts hide_items
+    if params[:retired]
+      @items = Item.where(user_id: current_user.id, retired: hide_items).order(sort_column + ' ' + sort_direction)
+    else
+      @items = Item.where(user_id: current_user.id).order(sort_column + ' ' + sort_direction)
+    end
+
   end
 
   # GET /items/1
@@ -67,6 +71,7 @@ class ItemsController < ApplicationController
     end
   end
 
+
   private
   def sort_column
     params[:sort] || "created_at"
@@ -76,6 +81,9 @@ class ItemsController < ApplicationController
     params[:direction] || "asc"
   end
 
+  def hide_items
+    params[:retired]
+  end
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])

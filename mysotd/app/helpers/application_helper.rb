@@ -6,4 +6,16 @@ module ApplicationHelper
     link_to title, {:sort => column, :direction => direction}, {:class => css_class}
   end
 
+  def hideable(column, title = nil)
+    title ||= column.titleize
+    puts params[:retired]
+    retired = params[:retired]
+
+    retired = toggle(retired)
+    link_to title, {:retired => retired}
+  end
+
+  def toggle(arg)
+    arg = !arg
+  end
 end
