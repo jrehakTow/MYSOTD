@@ -24,7 +24,6 @@ class ItemsController < ApplicationController
   # GET /items/new
   def new
     @item = Item.new
-    @categories = Category.where(user_id: current_user.id)
   end
 
   # GET /items/1/edit

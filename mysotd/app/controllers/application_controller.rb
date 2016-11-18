@@ -14,5 +14,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def check_items
+    items = Item.where(user_id: current_user.id)
+    if items.blank?
+      redirect_to items_url, alert: 'Please add a shaving item to inventory.'
+    end
+  end
 
 end
