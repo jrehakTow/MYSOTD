@@ -33,6 +33,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use devise for user model
 gem 'devise'
 
+gem 'rails_12factor', group: :production
+ruby '2.3.0'
 # Use omniauthorization
 gem 'omniauth'
 gem 'omniauth-twitter'
