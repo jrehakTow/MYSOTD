@@ -7,7 +7,6 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    #puts hide_items
     if params[:retired]
       @items = Item.where(user_id: current_user.id, retired: hide_items).order(sort_column + ' ' + sort_direction)
     else
