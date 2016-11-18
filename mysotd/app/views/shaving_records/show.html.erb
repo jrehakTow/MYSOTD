@@ -15,8 +15,6 @@
         <dd><%= @shaving_record.date.strftime("%b %d, %Y") %></dd>
         <dt><strong><%= model_class.human_attribute_name(:rating) %>:</strong></dt>
         <dd><%= @shaving_record.rating %></dd>
-        <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
-        <dd><%= @shaving_record.user_id %></dd>
         <dt><strong><%= model_class.human_attribute_name(:items) %>:</strong></dt>
         <dd> <% @items.all.each do |item| %>
               <div>
