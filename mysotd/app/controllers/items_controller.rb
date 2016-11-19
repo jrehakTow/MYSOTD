@@ -1,17 +1,18 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!
-  helper_method :sort_column, :sort_direction, :hide_items
+  helper_method :sort_column, :sort_direction #, :hide_items
 
   #should do number of uses before retired
   # GET /items
   # GET /items.json
   def index
-    if params[:retired]
-      @items = Item.where(user_id: current_user.id, retired: hide_items).order(sort_column + ' ' + sort_direction)
-    else
-      @items = Item.where(user_id: current_user.id).order(sort_column + ' ' + sort_direction)
-    end
+    #if params[:retired]
+      #@items = Item.where(user_id: current_user.id, retired: hide_items).order(sort_column + ' ' + sort_direction)
+    #else
+      #@items = Item.where(user_id: current_user.id).order(sort_column + ' ' + sort_direction)
+    #end
+    @items = Item.where(user_id: current_user.id).order(sort_column + ' ' + sort_direction)
 
   end
 
@@ -79,9 +80,9 @@ class ItemsController < ApplicationController
     params[:direction] || "asc"
   end
 
-  def hide_items
-    params[:retired]
-  end
+  #def hide_items
+    #params[:retired]
+  #end
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])
