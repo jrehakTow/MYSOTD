@@ -4,7 +4,8 @@
   <div class="btn btn-default btn-sm"><%= sortable "uses" %></div>
   <div class="btn btn-default btn-sm"><%= sortable "purchase_date"%></div>
   <div class="btn btn-default btn-sm"><%= sortable "price"%></div>
-  <div class=" btn btn-default btn-sm"><%= hideable "retired"%></div>
+  <%if false%><div class=" btn btn-default btn-sm"><%= hideable "retired"%></div><%end%>
+  <div class=" btn btn-default btn-sm" ><div id="hide_button">Hide Retired</div> </div>
 
   <div class="pull-right">
     <%= link_to t('.new', :default => t("helpers.links.new")),
@@ -13,6 +14,17 @@
     </div>
 </div>
 
+<script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
+<script>
+  function main() {
+    document.getElementById("hide_button").className = "hide_button";
+    document.getElementById("record_true").className = "hide_record";
+    $('.hide_button').on('click', function(){
+      $('.hide_record').toggle();
+    })
+  }
+  $(document).ready(main);
+</script>
 
 <%if false%>
 <table class="table table-responsive">
@@ -53,7 +65,8 @@
 </table>
 <%end%>
 
-<div id ="records"><% @items.each do |item| %>
+<% @items.each do |item| %>
+    <div id = record_<%= item.retired.to_s%>>
     <div class="panel panel-default">
   <div class="panel-heading"><h5><%= link_to item.name, item_path(item)%>
     <div class="panel-title pull-right"><%=item.purchase_date.strftime("%b %d, %Y")%>
@@ -103,8 +116,8 @@
     </p>
   </div>
 </div>
-
-<%end%>
 </div>
+<%end%>
+
 
 
